@@ -1,6 +1,6 @@
 from .models import Post
 from django.contrib.auth.models import User
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.utils import timezone
 from django.http import HttpResponse
 
@@ -20,3 +20,8 @@ def post100(request):
         Post.objects.create(author=me, title=title, text=text).publish()
     return HttpResponse('100 post is created')
     # Post.save()
+
+
+def post_detail(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    return render(request, 'blog/post_detail.html', {'post': post})
